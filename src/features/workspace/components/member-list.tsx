@@ -195,7 +195,7 @@ export function MemberList() {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Search"
-                  className="composer-input h-9 w-full rounded-md border border-white/10 bg-surface-3 pl-9 pr-3 text-sm text-ink outline-none transition placeholder:text-discord-muted focus:border-white/25 focus:bg-surface-2 focus:shadow-[0_0_8px_rgba(255,255,255,0.05)]"
+                  className="chat-input h-9 w-full pl-9 pr-3 text-sm"
                   aria-label="Search members"
                 />
               </div>

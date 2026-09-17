@@ -91,7 +91,6 @@ export function ChannelSidebar() {
   const activeServerId = useWorkspaceStore((state) => state.activeServerId);
   const activeChannelId = useWorkspaceStore((state) => state.activeChannelId);
   const getServer = useWorkspaceStore((state) => state.getServer);
-  const getCategoriesForServer = useWorkspaceStore((state) => state.getCategoriesForServer);
   const showStub = useWorkspaceStore((state) => state.showStub);
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -130,7 +129,6 @@ export function ChannelSidebar() {
   if (!activeServerId) return null;
   const server = getServer(activeServerId);
   if (!server) return null;
-  const categories = getCategoriesForServer(activeServerId);
 
   return (
     <>
@@ -252,7 +250,7 @@ export function ChannelSidebar() {
         </div>
 
         <ChannelCategoryList
-          categories={categories}
+          serverId={activeServerId}
           activeChannelId={activeChannelId}
         />
 

@@ -136,7 +136,7 @@ function ServerSettingsForm({
                 id="settings-server-name"
                 value={name}
                 maxLength={40}
-                className="composer-input h-11 w-full rounded-lg border border-border bg-surface px-3 text-sm outline-none transition focus:border-primary/50 focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_18%,transparent)]"
+                className="chat-input h-11 w-full px-3.5 text-sm"
                 onChange={(event) => setName(event.target.value)}
               />
             </div>

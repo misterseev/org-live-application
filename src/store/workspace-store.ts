@@ -73,6 +73,15 @@ interface WorkspaceState {
     categoryId: string;
     name: string;
   }) => { ok: true; channelId: string } | { ok: false; error: string };
+  createCategory: (input: {
+    serverId: string;
+    name: string;
+  }) => { ok: true; categoryId: string } | { ok: false; error: string };
+  updateChannel: (
+    channelId: string,
+    input: { name?: string; topic?: string },
+  ) => { ok: true } | { ok: false; error: string };
+  deleteChannel: (channelId: string) => void;
 }
 
 export const useWorkspaceStore = create<WorkspaceState>()(
@@ -316,6 +325,29 @@ export const useWorkspaceStore = create<WorkspaceState>()(
         });
       },
 
+      createCategory: ({ serverId, name }) => {
+        const trimmed = name.trim();
+        if (!trimmed) {
+          return { ok: false, error: 'Enter a valid category name.' };
+        }
+
+        const categoryId = createId('cat');
+        set((state) => ({
+          categories: [
+            ...state.categories,
+            {
+              id: categoryId,
+              serverId,
+              name: trimmed,
+              channelIds: [],
+              collapsed: false,
+            },
+          ],
+        }));
+
+        return { ok: true, categoryId };
+      },
+
       createChannel: ({ categoryId, name }) => {
         const category = get().categories.find((item) => item.id === categoryId);
         if (!category) {
@@ -367,6 +399,53 @@ export const useWorkspaceStore = create<WorkspaceState>()(
         }));
 
         return { ok: true, channelId };
+      },
+
+      updateChannel: (channelId, { name, topic }) => {
+        const existing = get().channels.find((ch) => ch.id === channelId);
+        if (!existing) return { ok: false, error: 'Channel not found.' };
+
+        let slug = existing.name;
+        if (name !== undefined) {
+          slug = name
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9\u0e80-\u0eff\-_+.!~*']/gi, '')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+          if (!slug) return { ok: false, error: 'Enter a valid channel name.' };
+          const duplicate = get().channels.some(
+            (ch) => ch.serverId === existing.serverId && ch.name === slug && ch.id !== channelId,
+          );
+          if (duplicate) return { ok: false, error: 'A channel with this name already exists.' };
+        }
+
+        set((state) => ({
+          channels: state.channels.map((ch) =>
+            ch.id === channelId
+              ? { ...ch, name: slug, topic: topic !== undefined ? topic : ch.topic }
+              : ch,
+          ),
+        }));
+        return { ok: true };
+      },
+
+      deleteChannel: (channelId) => {
+        const wasActive = get().activeChannelId === channelId;
+        set((state) => {
+          const remaining = state.channels.filter((ch) => ch.id !== channelId);
+          const categories = state.categories.map((cat) => ({
+            ...cat,
+            channelIds: cat.channelIds.filter((id) => id !== channelId),
+          }));
+          // If the deleted channel was active, switch to the first available channel
+          let activeChannelId = state.activeChannelId;
+          if (wasActive) {
+            activeChannelId = remaining.find((ch) => ch.serverId === state.activeServerId)?.id ?? null;
+          }
+          return { channels: remaining, categories, activeChannelId };
+        });
       },
     }),
     {

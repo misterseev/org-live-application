@@ -191,7 +191,6 @@ export default function LandingPage() {
         aria-hidden
       />
 
-      <MarketingHeader />
 
       <main>
         {/* ══ HERO ══════════════════════════════════════════════════════ */}
@@ -269,11 +268,10 @@ export default function LandingPage() {
                     className={`chat-bubble flex ${msg.from === 'me' ? 'justify-end' : 'justify-start'}`}
                   >
                     <span
-                      className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${
-                        msg.from === 'me'
-                          ? 'rounded-br-md bg-teal text-background font-medium'
-                          : 'rounded-bl-md bg-surface-3 text-ink'
-                      }`}
+                      className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${msg.from === 'me'
+                        ? 'rounded-br-md bg-teal text-background font-medium'
+                        : 'rounded-bl-md bg-surface-3 text-ink'
+                        }`}
                     >
                       {msg.text}
                     </span>

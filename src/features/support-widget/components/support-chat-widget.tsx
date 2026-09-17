@@ -179,7 +179,7 @@ export function SupportChatWidget() {
                 }
               }}
               placeholder="Ask a question…"
-              className="h-10 flex-1 rounded-lg border border-border bg-surface-2 px-3 text-sm outline-none transition focus:border-primary/50 focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_18%,transparent)]"
+              className="chat-input h-10 flex-1 px-3.5 text-sm"
               aria-label="Support message"
             />
             <button

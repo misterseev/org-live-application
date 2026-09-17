@@ -129,7 +129,7 @@ export function FriendsPanel({
                       ? 'Search people by name or email'
                       : 'Search friends'
                   }
-                  className="composer-input h-11 w-full rounded-xl border border-white/10 bg-surface-2 pl-10 pr-3 text-sm text-ink outline-none transition placeholder:text-muted focus:border-white/25 focus:shadow-[0_0_8px_rgba(255,255,255,0.05)]"
+                  className="chat-input h-11 w-full pl-10 pr-3 text-sm"
                   aria-label="Search friends"
                   autoFocus
                 />

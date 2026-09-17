@@ -1,0 +1,250 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+:root {
+  /* Brand palette */
+  --teal: #72CEC1;
+  --cream: hsl(35, 86%, 95%);
+  --indigo: #565A97;
+  --gold: #FFD491;
+  --coral: #FF7F5C;
+
+  /* Semantic tokens — dark theme */
+  --primary: #189137;
+  /* teal   */
+  --secondary: #565A97;
+  /* indigo */
+  --accent: #FFD491;
+  /* gold   */
+  --success: #72CEC1;
+  /* reuse teal for success */
+  --error: #FF7F5C;
+  /* coral  */
+  --warning: #FFD491;
+  /* gold   */
+
+  /* Backgrounds (dark navy scale) */
+  --background: #1E2035;
+  /* deepest layer   */
+  --surface: #252840;
+  /* cards / panels  */
+  --surface-2: #2B2E4A;
+  /* sidebar, inputs */
+  --surface-3: #32365A;
+  /* hover states    */
+
+  /* Text */
+  --ink: #FDF3E5;
+  /* cream — primary text  */
+  --muted: #9093B5;
+  /* muted / placeholder   */
+  --border: #3A3E63;
+  /* subtle dividers       */
+
+  /* Discord-style channel vars (remapped to dark palette) */
+  --discord-app: #1E2035;
+  --discord-sidebar: #252840;
+  --discord-panel: #2B2E4A;
+  --discord-divider: rgba(255, 255, 255, 0.08);
+  --discord-muted: #9093B5;
+  --discord-online: #72CEC1;
+  --discord-channel-hover: #2B2E4A;
+  --discord-channel-active: rgba(86, 90, 151, 0.35);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  /* Palette aliases */
+  --color-teal: var(--teal);
+  --color-cream: var(--cream);
+  --color-indigo: var(--indigo);
+  --color-gold: var(--gold);
+  --color-coral: var(--coral);
+  /* Discord channel vars */
+  --color-discord-app: var(--discord-app);
+  --color-discord-sidebar: var(--discord-sidebar);
+  --color-discord-panel: var(--discord-panel);
+  --color-discord-divider: var(--discord-divider);
+  --color-discord-muted: var(--discord-muted);
+  --color-discord-online: var(--discord-online);
+  --color-discord-channel-hover: var(--discord-channel-hover);
+  --color-discord-channel-active: var(--discord-channel-active);
+  /* Typography & shape */
+  --font-sans: var(--font-inter), var(--font-noto-lao), system-ui, sans-serif;
+  --radius-default: 8px;
+  --radius-card: 12px;
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-card: 0 4px 24px rgb(0 0 0 / 0.35);
+}
+
+@utility shadow-xs {
+  box-shadow: var(--shadow-xs);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+button,
+[role="button"],
+button[type="button"],
+button[type="submit"] {
+  cursor: pointer;
+}
+
+/* Hide scrollbars everywhere — scrolling still works */
+*,
+*::before,
+*::after {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Soft focus for interactive chrome (buttons, links) — not form fields */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+/* Form controls: no thick outline/ring — subtle border + soft glow only */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible,
+.input:focus,
+.input:focus-visible,
+.input[data-focused="true"],
+.input[data-focus-visible="true"],
+.textarea:focus,
+.textarea:focus-visible,
+.textarea[data-focused="true"],
+.textarea[data-focus-visible="true"],
+[data-slot="input"]:focus,
+[data-slot="input"]:focus-visible {
+  outline: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent) !important;
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border)) !important;
+}
+
+/* Discord-style composer: no focus chrome on the inner textarea */
+textarea.composer-input:focus,
+textarea.composer-input:focus-visible,
+input.composer-input:focus,
+input.composer-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+}
+
+/* Keep invalid fields readable without stacking rings */
+.input[data-invalid="true"]:focus,
+.input[data-invalid="true"]:focus-visible,
+.textarea[data-invalid="true"]:focus,
+.textarea[data-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error) 16%, transparent) !important;
+  border-color: var(--error) !important;
+}
+
+/* Native/custom fields that use outline-none already */
+input.outline-none:focus,
+input.outline-none:focus-visible,
+textarea.outline-none:focus,
+textarea.outline-none:focus-visible {
+  outline: none !important;
+}
+
+/* Auth / Register form card & inputs: borderless, shadowless, subtle white outline, gentle focus */
+.auth-card {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+.auth-input,
+input.auth-input,
+[data-slot="input"].auth-input,
+button.auth-input {
+  height: 52px !important;
+  min-height: 52px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  border-radius: 14px !important;
+  border: 0 !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+  outline: 1px solid rgba(255, 255, 255, 0.18) !important;
+  outline-offset: 0 !important;
+  background-color: rgba(43, 46, 74, 0.6) !important;
+  color: var(--ink) !important;
+  transition: outline-color 180ms ease, background-color 180ms ease !important;
+}
+
+.auth-input:hover:not(:focus):not(:focus-visible),
+input.auth-input:hover:not(:focus):not(:focus-visible),
+[data-slot="input"].auth-input:hover:not(:focus):not(:focus-visible),
+button.auth-input:hover {
+  outline: 1px solid rgba(255, 255, 255, 0.26) !important;
+  background-color: rgba(50, 54, 90, 0.75) !important;
+}
+
+.auth-input:focus,
+.auth-input:focus-visible,
+.auth-input[data-focused="true"],
+.auth-input[data-focus-visible="true"],
+input.auth-input:focus,
+input.auth-input:focus-visible,
+[data-slot="input"].auth-input:focus,
+[data-slot="input"].auth-input:focus-visible {
+  border: 0 !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  outline: 1px solid rgba(255, 255, 255, 0.38) !important;
+  outline-offset: 0 !important;
+  background-color: rgba(50, 54, 90, 0.85) !important;
+}
+
+.auth-input[data-invalid="true"],
+input.auth-input[data-invalid="true"] {
+  outline: 1px solid color-mix(in srgb, var(--error) 75%, transparent) !important;
+}
